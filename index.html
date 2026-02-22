@@ -9,23 +9,56 @@
 <body>
 
 <header class="topbar">
-  <h1>Picks Dashboards</h1>
-  <p>Over 2.5 • BTTS • Over 1.5 • Live Supabase</p>
+  <div>
+    <h1>Picks Dashboards</h1>
+    <p class="subtitle">Over 2.5 • BTTS • Over 1.5 • Live Supabase</p>
+  </div>
+  <div class="actions">
+    <button id="wideBtn" class="btn">Wide</button>
+    <button id="resetBtn" class="btn">Reset</button>
+  </div>
 </header>
 
 <main class="container">
-  <div class="tabs" id="tabs"></div>
 
-  <div id="status" class="status"></div>
-  <div id="count" class="count"></div>
+  <section class="card controls">
+    <div class="field full">
+      <label>Dashboard</label>
+      <div id="tabs" class="tabs"></div>
+    </div>
 
-  <table id="tbl">
-    <thead></thead>
-    <tbody></tbody>
-  </table>
+    <div class="field">
+      <label>Search</label>
+      <input id="searchInput" type="text" placeholder="Team, league, pick..." />
+    </div>
+
+    <div class="field">
+      <label>League</label>
+      <select id="leagueFilter"></select>
+    </div>
+
+    <div class="field">
+      <label>Pick</label>
+      <select id="pickFilter"></select>
+    </div>
+  </section>
+
+  <section class="card tableCard">
+    <div class="meta">
+      <div id="count"></div>
+      <div id="status"></div>
+    </div>
+
+    <div class="tableWrap">
+      <table id="tbl">
+        <thead></thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  </section>
+
 </main>
 
-<!-- Supabase v2 CDN -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 <script src="app.js"></script>
 
