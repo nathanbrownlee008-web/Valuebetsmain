@@ -7,67 +7,80 @@ const $ = (id) => document.getElementById(id);
 
 const state = {
   datasets: [],
-  current: null,
   raw: [],
-  filtered: [],
-  columnsAll: [],
-  columns: [],
-  sortKey: null,
-  sortDir: "asc"
+  filtered: []
 };
 
 function buildTabs(){
   const tabs = $("tabs");
   tabs.innerHTML = "";
   state.datasets.forEach(d=>{
-    const b = document.createElement("button");
-    b.className = "tab";
-    b.textContent = d.name;
-    b.onclick = () => loadDataset(d.slug);
-    tabs.appendChild(b);
+    const btn = document.createElement("button");
+    btn.className = "tab";
+    btn.textContent = d.name;
+    btn.onclick = () => loadDataset(d.slug);
+    tabs.appendChild(btn);
   });
 }
 
 async function loadDataset(slug){
-  state.current = slug;
   $("status").textContent = "Loading...";
 
-  if(slug === "value-bets"){
-    const { data } = await supabase
-      .from("bets")
-      .select("*")
-      .eq("type","value")
-      .order("bet_date",{ascending:false});
+  let query = supabase.from("bets").select("*");
 
-    state.raw = data || [];
+  if(slug === "value-bets"){
+    query = query.eq("type","value");
   }
 
   if(slug === "bet-history"){
-    const { data } = await supabase
-      .from("bets")
-      .select("*")
-      .eq("type","history")
-      .order("bet_date",{ascending:false});
-
-    state.raw = data || [];
+    query = query.eq("type","history");
   }
 
+  const { data, error } = await query.order("bet_date",{ascending:false});
+
+  if(error){
+    console.error(error);
+    $("status").textContent = "Error loading data";
+    return;
+  }
+
+  state.raw = data || [];
   state.filtered = [...state.raw];
   render();
 }
 
 function render(){
   const tbody = $("tbl").querySelector("tbody");
+  const thead = $("tbl").querySelector("thead");
   tbody.innerHTML = "";
-  state.filtered.forEach(r=>{
+  thead.innerHTML = "";
+
+  if(state.filtered.length === 0){
+    $("count").textContent = "0 rows";
+    $("status").textContent = "No data found";
+    return;
+  }
+
+  const columns = Object.keys(state.filtered[0]);
+
+  const headerRow = document.createElement("tr");
+  columns.forEach(col=>{
+    const th = document.createElement("th");
+    th.textContent = col;
+    headerRow.appendChild(th);
+  });
+  thead.appendChild(headerRow);
+
+  state.filtered.forEach(row=>{
     const tr = document.createElement("tr");
-    Object.values(r).forEach(val=>{
+    columns.forEach(col=>{
       const td = document.createElement("td");
-      td.textContent = val ?? "";
+      td.textContent = row[col] ?? "";
       tr.appendChild(td);
     });
     tbody.appendChild(tr);
   });
+
   $("count").textContent = state.filtered.length + " rows";
   $("status").textContent = "Live Supabase data";
 }
