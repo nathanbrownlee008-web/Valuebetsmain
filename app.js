@@ -7,6 +7,7 @@ const $ = (id) => document.getElementById(id);
 
 const state = {
   datasets: [],
+  current: null,
   raw: [],
   filtered: []
 };
@@ -24,19 +25,23 @@ function buildTabs(){
 }
 
 async function loadDataset(slug){
+  state.current = slug;
   $("status").textContent = "Loading...";
 
-  let query = supabase.from("bets").select("*");
+  let table = "";
 
   if(slug === "value-bets"){
-    query = query.eq("type","value");
+    table = "value_bets";
   }
 
   if(slug === "bet-history"){
-    query = query.eq("type","history");
+    table = "bet_history";
   }
 
-  const { data, error } = await query.order("bet_date",{ascending:false});
+  const { data, error } = await supabase
+    .from(table)
+    .select("*")
+    .order("bet_date",{ascending:false});
 
   if(error){
     console.error(error);
