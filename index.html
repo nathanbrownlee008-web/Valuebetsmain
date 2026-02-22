@@ -3,51 +3,21 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Picks Dashboards</title>
+  <title>Picks Dashboard</title>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
+  <header>
+    <h1>Picks Dashboard</h1>
+    <p>Over 2.5 • BTTS • Over 1.5 • Live Supabase</p>
+  </header>
 
-<header class="topbar">
-  <div>
-    <h1>Picks Dashboards</h1>
-    <p class="subtitle">Over 2.5 • BTTS • Over 1.5 • Live Supabase</p>
-  </div>
-  <div class="actions">
-    <button id="wideBtn" class="btn">Wide</button>
-    <button id="resetBtn" class="btn">Reset</button>
-  </div>
-</header>
+  <main>
+    <div class="tab active">Value Bets</div>
 
-<main class="container">
-
-  <section class="card controls">
-    <div class="field full">
-      <label>Dashboard</label>
-      <div id="tabs" class="tabs"></div>
-    </div>
-
-    <div class="field">
-      <label>Search</label>
-      <input id="searchInput" type="text" placeholder="Team, league, pick..." />
-    </div>
-
-    <div class="field">
-      <label>League</label>
-      <select id="leagueFilter"></select>
-    </div>
-
-    <div class="field">
-      <label>Pick</label>
-      <select id="pickFilter"></select>
-    </div>
-  </section>
-
-  <section class="card tableCard">
-    <div class="meta">
-      <div id="count"></div>
-      <div id="status"></div>
-    </div>
+    <div id="status">Loading...</div>
+    <div id="count"></div>
 
     <div class="tableWrap">
       <table id="tbl">
@@ -55,12 +25,8 @@
         <tbody></tbody>
       </table>
     </div>
-  </section>
+  </main>
 
-</main>
-
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
-<script src="app.js"></script>
-
+  <script src="app.js"></script>
 </body>
 </html>

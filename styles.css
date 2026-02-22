@@ -2,70 +2,21 @@
 body {
   margin: 0;
   font-family: Arial, sans-serif;
-  background: linear-gradient(to bottom, #0f172a, #020617);
-  color: #fff;
-}
-
-.topbar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  background: #0f172a;
+  color: white;
   padding: 20px;
 }
 
-.subtitle {
-  opacity: 0.7;
-}
-
-.container {
-  padding: 20px;
-}
-
-.card {
-  background: rgba(17,24,39,0.8);
-  padding: 20px;
-  border-radius: 12px;
-  margin-bottom: 20px;
-}
-
-.controls {
-  display: grid;
-  grid-template-columns: repeat(auto-fit,minmax(200px,1fr));
-  gap: 15px;
-}
-
-.field {
-  display: flex;
-  flex-direction: column;
-}
-
-.field.full {
-  grid-column: 1/-1;
-}
-
-.tabs {
-  display: flex;
-  gap: 10px;
-  flex-wrap: wrap;
+header h1 {
+  margin-bottom: 5px;
 }
 
 .tab {
-  background: #1f2937;
-  border: 1px solid #374151;
-  color: #fff;
-  padding: 8px 14px;
+  display: inline-block;
+  padding: 10px 20px;
+  background: #1e293b;
   border-radius: 8px;
-  cursor: pointer;
-}
-
-.tab:hover {
-  background: #2563eb;
-}
-
-input, select {
-  padding: 8px;
-  border-radius: 6px;
-  border: none;
+  margin-bottom: 20px;
 }
 
 .tableWrap {
@@ -75,25 +26,15 @@ input, select {
 table {
   width: 100%;
   border-collapse: collapse;
+  background: #1e293b;
 }
 
 th, td {
   padding: 8px;
-  border-bottom: 1px solid #1f2937;
+  border-bottom: 1px solid #334155;
   text-align: left;
 }
 
-.meta {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 10px;
-}
-
-.btn {
-  background: #1f2937;
-  border: 1px solid #374151;
-  color: white;
-  padding: 8px 12px;
-  border-radius: 8px;
-  cursor: pointer;
+th {
+  background: #334155;
 }
