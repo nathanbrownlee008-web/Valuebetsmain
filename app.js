@@ -1,4 +1,3 @@
-
 const SUPABASE_URL = "https://krmmmutcejnzdfupexpv.supabase.co";
 const SUPABASE_KEY = "sb_publishable_3NHjMMVw1lai9UNAA-0QZA_sKM21LgD";
 const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
@@ -6,7 +5,11 @@ const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 const $ = (id) => document.getElementById(id);
 
 const state = {
-  datasets: [],
+  datasets: [
+    { name: "Value Bets", slug: "value-bets" },
+    { name: "Bet History", slug: "bet-history" },
+    { name: "Betting Strategies", slug: "strategies" }
+  ],
   current: null,
   raw: [],
   filtered: []
@@ -30,18 +33,13 @@ async function loadDataset(slug){
 
   let table = "";
 
-  if(slug === "value-bets"){
-    table = "value_bets";
-  }
-
-  if(slug === "bet-history"){
-    table = "bet_history";
-  }
+  if(slug === "value-bets") table = "value_bets";
+  if(slug === "bet-history") table = "bet_history";
+  if(slug === "strategies") table = "strategies";
 
   const { data, error } = await supabase
     .from(table)
-    .select("*")
-    .order("bet_date",{ascending:false});
+    .select("*");
 
   if(error){
     console.error(error);
@@ -90,9 +88,7 @@ function render(){
   $("status").textContent = "Live Supabase data";
 }
 
-async function init(){
-  const res = await fetch("datasets.json");
-  state.datasets = await res.json();
+function init(){
   buildTabs();
   loadDataset("value-bets");
 }
