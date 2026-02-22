@@ -1,10 +1,49 @@
 
-body { background:#0f172a; color:white; font-family:Arial; margin:0; }
-.container { padding:20px; }
-.card { background:#111827; padding:20px; border-radius:12px; margin-bottom:20px; }
-.tabs { display:flex; gap:10px; flex-wrap:wrap; }
-.tab { background:#1f2937; color:white; border:1px solid #374151;
-       padding:8px 14px; border-radius:8px; cursor:pointer; }
-.tab:hover { background:#2563eb; }
-table { width:100%; border-collapse:collapse; }
-th, td { padding:8px; border-bottom:1px solid #1f2937; }
+body {
+  background: #0f172a;
+  color: white;
+  font-family: Arial;
+  margin: 0;
+  padding: 20px;
+}
+
+.topbar {
+  margin-bottom: 20px;
+}
+
+.tabs {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.tab {
+  background: #1f2937;
+  color: white;
+  border: 1px solid #374151;
+  padding: 8px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.tab:hover {
+  background: #2563eb;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th, td {
+  padding: 8px;
+  border-bottom: 1px solid #1f2937;
+}
+
+.status {
+  margin-bottom: 5px;
+}
+
+.count {
+  margin-bottom: 15px;
+}

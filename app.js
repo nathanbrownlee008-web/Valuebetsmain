@@ -1,82 +1,66 @@
 const SUPABASE_URL = "https://krmmmutcejnzdfupexpv.supabase.co";
 const SUPABASE_KEY = "sb_publishable_3NHjMMVw1lai9UNAA-0QZA_sKM21LgD";
-const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-const $ = (id) => document.getElementById(id);
+const client = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-const state = {
-  datasets: [
-    { name: "Value Bets", slug: "value-bets" },
-    { name: "Bet History", slug: "bet-history" },
-    { name: "Betting Strategies", slug: "strategies" }
-  ],
-  current: null,
-  raw: [],
-  filtered: []
-};
+const tabsEl = document.getElementById("tabs");
+const statusEl = document.getElementById("status");
+const countEl = document.getElementById("count");
+const table = document.getElementById("tbl");
+const thead = table.querySelector("thead");
+const tbody = table.querySelector("tbody");
 
-function buildTabs(){
-  const tabs = $("tabs");
-  tabs.innerHTML = "";
-  state.datasets.forEach(d=>{
+const datasets = [
+  { name: "Value Bets", table: "value_bets" },
+  { name: "Bet History", table: "bet_history" },
+  { name: "Betting Strategies", table: "strategies" }
+];
+
+function buildTabs() {
+  tabsEl.innerHTML = "";
+  datasets.forEach(ds => {
     const btn = document.createElement("button");
     btn.className = "tab";
-    btn.textContent = d.name;
-    btn.onclick = () => loadDataset(d.slug);
-    tabs.appendChild(btn);
+    btn.textContent = ds.name;
+    btn.onclick = () => loadTable(ds.table);
+    tabsEl.appendChild(btn);
   });
 }
 
-async function loadDataset(slug){
-  state.current = slug;
-  $("status").textContent = "Loading...";
+async function loadTable(tableName) {
+  statusEl.textContent = "Loading...";
+  thead.innerHTML = "";
+  tbody.innerHTML = "";
 
-  let table = "";
-
-  if(slug === "value-bets") table = "value_bets";
-  if(slug === "bet-history") table = "bet_history";
-  if(slug === "strategies") table = "strategies";
-
-  const { data, error } = await supabase
-    .from(table)
+  const { data, error } = await client
+    .from(tableName)
     .select("*");
 
-  if(error){
+  if (error) {
     console.error(error);
-    $("status").textContent = "Error loading data";
+    statusEl.textContent = "Error loading data";
     return;
   }
 
-  state.raw = data || [];
-  state.filtered = [...state.raw];
-  render();
-}
-
-function render(){
-  const tbody = $("tbl").querySelector("tbody");
-  const thead = $("tbl").querySelector("thead");
-  tbody.innerHTML = "";
-  thead.innerHTML = "";
-
-  if(state.filtered.length === 0){
-    $("count").textContent = "0 rows";
-    $("status").textContent = "No data found";
+  if (!data || data.length === 0) {
+    statusEl.textContent = "No data found";
+    countEl.textContent = "0 rows";
     return;
   }
 
-  const columns = Object.keys(state.filtered[0]);
+  const columns = Object.keys(data[0]);
 
   const headerRow = document.createElement("tr");
-  columns.forEach(col=>{
+  columns.forEach(col => {
     const th = document.createElement("th");
     th.textContent = col;
     headerRow.appendChild(th);
   });
   thead.appendChild(headerRow);
 
-  state.filtered.forEach(row=>{
+  data.forEach(row => {
     const tr = document.createElement("tr");
-    columns.forEach(col=>{
+    columns.forEach(col => {
       const td = document.createElement("td");
       td.textContent = row[col] ?? "";
       tr.appendChild(td);
@@ -84,13 +68,9 @@ function render(){
     tbody.appendChild(tr);
   });
 
-  $("count").textContent = state.filtered.length + " rows";
-  $("status").textContent = "Live Supabase data";
+  countEl.textContent = data.length + " rows";
+  statusEl.textContent = "Live Supabase data";
 }
 
-function init(){
-  buildTabs();
-  loadDataset("value-bets");
-}
-
-init();
+buildTabs();
+loadTable("value_bets");

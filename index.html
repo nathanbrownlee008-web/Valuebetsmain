@@ -3,48 +3,30 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="theme-color" content="#111827" />
   <title>Picks Dashboards</title>
   <link rel="stylesheet" href="styles.css" />
 </head>
-<body class="compact">
+<body>
 
 <header class="topbar">
-  <div class="title">
-    <h1>Picks Dashboards</h1>
-    <p class="subtitle">Over 2.5 • BTTS • Over 1.5 • Live Supabase</p>
-  </div>
+  <h1>Picks Dashboards</h1>
+  <p>Over 2.5 • BTTS • Over 1.5 • Live Supabase</p>
 </header>
 
 <main class="container">
+  <div class="tabs" id="tabs"></div>
 
-  <section class="controls card">
-    <div class="control span-2">
-      <label>Dashboard</label>
-      <div id="tabs" class="tabs"></div>
-    </div>
-  </section>
+  <div id="status" class="status"></div>
+  <div id="count" class="count"></div>
 
-  <section class="card tableWrap">
-    <div class="tableMeta">
-      <div>
-        <div id="count"></div>
-        <div id="status" class="small"></div>
-      </div>
-    </div>
-
-    <div class="tableScroll">
-      <table id="tbl">
-        <thead></thead>
-        <tbody></tbody>
-      </table>
-    </div>
-  </section>
-
+  <table id="tbl">
+    <thead></thead>
+    <tbody></tbody>
+  </table>
 </main>
 
-<!-- IMPORTANT: Supabase must load BEFORE app.js -->
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<!-- Supabase v2 CDN -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 <script src="app.js"></script>
 
 </body>
